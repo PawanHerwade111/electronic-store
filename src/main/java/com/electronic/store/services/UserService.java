@@ -5,28 +5,28 @@ import java.util.List;
 import com.electronic.store.dtos.UserDto;
 
 public interface UserService {
-	
-	//create	
+
+	// create
 	UserDto createUser(UserDto user);
-	
-	//update	
+
+	// update
 	UserDto updateUSer(UserDto userDto, String userId);
-	
-	//delete
+
+	// delete
 	void deleteUser(String userId);
-	
-	//get all users
+
+	// get all users
 	List<UserDto> getAllUser();
-	
-	//get single user by id
+
+	// get single user by id
 	UserDto getUserById(String userId);
-	
-	//get single user by email
+
+	// get single user by email
 	UserDto getUserByEmail(String userId);
-	
-	//search user
+
+	// search user
 	List<UserDto> searchUser(String keyword);
-	
-	//other user specific features
-	
+
+	// other user specific features
+
 }
