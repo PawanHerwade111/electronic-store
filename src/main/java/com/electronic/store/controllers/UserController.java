@@ -18,6 +18,8 @@ import com.electronic.store.dtos.ApiResponseMessage;
 import com.electronic.store.dtos.UserDto;
 import com.electronic.store.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -27,7 +29,7 @@ public class UserController {
 
 	// create user
 	@PostMapping
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> createUser( @Valid @RequestBody UserDto userDto) {
 		UserDto userDto1 = userService.createUser(userDto);
 		return new ResponseEntity<>(userDto1, HttpStatus.CREATED);
 
@@ -35,7 +37,7 @@ public class UserController {
 
 	// update user
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@PathVariable("userId") String userId, @RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> updateUser(@PathVariable("userId") String userId, @Valid @RequestBody UserDto userDto) {
 		UserDto userDto1 = userService.updateUSer(userDto, userId);
 		return new ResponseEntity<>(userDto1, HttpStatus.OK);
 	}
