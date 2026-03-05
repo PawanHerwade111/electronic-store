@@ -6,11 +6,17 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.electronic.store.dtos.PageableResponse;
 import com.electronic.store.dtos.UserDto;
 import com.electronic.store.entities.User;
 import com.electronic.store.exceptions.ResourceNotFoundException;
+import com.electronic.store.helper.Helper;
 import com.electronic.store.repositories.UserRepository;
 import com.electronic.store.services.UserService;
 
@@ -71,10 +77,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDto> getAllUser() {
-		List<User> usersList = userRepository.findAll();
-		List<UserDto> usersDtoList = usersList.stream().map(user -> mapEntityToDto(user)).collect(Collectors.toList());
-		return usersDtoList;
+	public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir) {
+		Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
+		// pageNumber default starts from 0
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+		Page<User> page = userRepository.findAll(pageable);
+//		List<User> usersList = page.getContent();
+//		List<UserDto> usersDtoList = usersList.stream().map(user -> mapEntityToDto(user)).collect(Collectors.toList());
+//		PageableResponse<UserDto> response = new PageableResponse<>();
+//		response.setContent(usersDtoList);
+//		response.setPageNumber(page.getNumber());
+//		response.setPageSize(page.getSize());
+//		response.setTotalElements(page.getTotalElements());
+//		response.setTotalPages(page.getTotalPages());
+//		response.setLastPage(page.isLast());
+		PageableResponse<UserDto> response = Helper.getPageableResponse(page, UserDto.class);
+		return response;
 	}
 
 	@Override
