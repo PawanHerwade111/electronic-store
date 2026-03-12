@@ -1,10 +1,16 @@
 package com.electronic.store.services.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +33,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Value("${product.image.path}")
+	private String imagePath;
 
 	@Override
 	public ProductDto create(ProductDto productDto) {
@@ -51,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 		product.setQuantity(productDto.getQuantity());
 		product.setLive(productDto.isLive());
 		product.setStock(productDto.isStock());
+		product.setProductImageName(productDto.getProductImageName());
 		Product updatedProduct = productRepository.save(product);
 		return mapper.map(updatedProduct, ProductDto.class);
 	}
@@ -59,6 +69,17 @@ public class ProductServiceImpl implements ProductService {
 	public void delete(String productId) {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found with given Id."));
+		//delete product image
+		String fullPath = imagePath + product.getProductImageName();
+		try {
+			Path path = Paths.get(fullPath);
+			Files.delete(path);
+		} catch (NoSuchFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//delete product
 		productRepository.delete(product);
 	}
 
