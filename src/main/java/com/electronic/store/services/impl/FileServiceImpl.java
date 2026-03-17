@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.electronic.store.exceptions.BadApiRequest;
+import com.electronic.store.exceptions.BadApiRequestException;
 import com.electronic.store.services.FileService;
 
 @Service
@@ -47,7 +47,7 @@ public class FileServiceImpl implements FileService {
 			return fileNameWithExtension;
 
 		} else {
-			throw new BadApiRequest("File with this extension is not allowed!");
+			throw new BadApiRequestException("File with this extension is not allowed!");
 		}
 	}
 
