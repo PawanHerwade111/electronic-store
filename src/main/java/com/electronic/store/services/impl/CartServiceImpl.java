@@ -71,7 +71,7 @@ public class CartServiceImpl implements CartService {
 		// if cart item already present then update quantity
 		AtomicReference<Boolean> updated = new AtomicReference<>(false);
 		List<CartItem> items = cart.getItems();
-		List<CartItem> updatedItems = items.stream().map(item -> {
+		items = items.stream().map(item -> {
 			if (item.getProduct().getProductId().equalsIgnoreCase(productId)) {
 				// item already present
 				item.setQuantity(quantity);
@@ -80,7 +80,7 @@ public class CartServiceImpl implements CartService {
 			}
 			return item;
 		}).collect(Collectors.toList());
-		cart.setItems(updatedItems);
+		//cart.setItems(updatedItems);
 		// create items
 		if (!updated.get()) {
 			CartItem item = CartItem.builder().quantity(quantity).totalPrice(quantity * product.getDiscountedPrice()).cart(cart)
