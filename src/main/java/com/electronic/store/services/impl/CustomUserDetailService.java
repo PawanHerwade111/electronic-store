@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.electronic.store.entities.CustomUserDetail;
 import com.electronic.store.entities.User;
 import com.electronic.store.repositories.UserRepository;
 

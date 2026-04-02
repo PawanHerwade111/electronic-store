@@ -50,6 +50,9 @@ public class User implements UserDetails {
 	@Column(name = "user_image_name")
 	private String imageName;
 	
+	@Column(name = "user_role")
+	private String role = "USER";
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<Order> orders = new ArrayList<>();
 
