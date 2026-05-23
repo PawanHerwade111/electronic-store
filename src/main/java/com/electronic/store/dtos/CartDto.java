@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.electronic.store.entities.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +21,7 @@ public class CartDto {
 
 	private Date createdAt;
 
-	private User user;
+	private UserDto user;
 
 	private List<CartItemDto> items = new ArrayList<>();
 }
