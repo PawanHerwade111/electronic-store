@@ -23,9 +23,11 @@ import org.springframework.stereotype.Service;
 
 import com.electronic.store.dtos.PageableResponse;
 import com.electronic.store.dtos.UserDto;
+import com.electronic.store.entities.Role;
 import com.electronic.store.entities.User;
 import com.electronic.store.exceptions.ResourceNotFoundException;
 import com.electronic.store.helper.Helper;
+import com.electronic.store.repositories.RoleRepository;
 import com.electronic.store.repositories.UserRepository;
 import com.electronic.store.services.UserService;
 
@@ -44,6 +46,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Override
@@ -53,6 +58,14 @@ public class UserServiceImpl implements UserService {
 		//encoding password
 		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		User user = mapDtoToEntity(userDto);
+		
+		//get the normal role
+		Role role = new Role();
+		role.setRoleId(UUID.randomUUID().toString());
+		role.setName("ROLE_NORMAL");
+		Role normalRole = roleRepository.findByName("ROLE_NORMAL").orElse(role);
+		user.setRoles(List.of(normalRole));
+		
 		User savedUser = userRepository.save(user);
 		UserDto newDto = mapEntityToDto(savedUser);
 		return newDto;
@@ -80,7 +93,7 @@ public class UserServiceImpl implements UserService {
 		user.setName(userDto.getName());
 		user.setAbout(userDto.getAbout());
 		user.setGender(userDto.getGender());
-		user.setPassword(userDto.getPassword());
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setImageName(userDto.getImageName());
 		User updatedUser = userRepository.save(user);
 		UserDto updatedDto = mapEntityToDto(updatedUser);

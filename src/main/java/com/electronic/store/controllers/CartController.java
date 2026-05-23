@@ -3,6 +3,7 @@ package com.electronic.store.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class CartController {
 	private CartService cartService;
 
 	// add items to cart
+	@PreAuthorize("hasAnyRole('NORMAL','ADMIN')")
 	@PostMapping("/add/{userId}")
 	public ResponseEntity<CartDto> addItemToCart(@RequestBody AddItemToCartRequest request,
 			@PathVariable("userId") String userId) {
@@ -33,6 +35,7 @@ public class CartController {
 	}
 
 	// remove item from cart
+	@PreAuthorize("hasAnyRole('NORMAL','ADMIN')")
 	@DeleteMapping("/{userId}/items/{itemId}")
 	public ResponseEntity<ApiResponseMessage> removeItemFromCart(@PathVariable("userId") String userId,
 			@PathVariable("itemId") int itemId) {
@@ -44,6 +47,7 @@ public class CartController {
 	}
 
 	// clear cart
+	@PreAuthorize("hasAnyRole('NORMAL','ADMIN')")
 	@DeleteMapping("/clear/{userId}")
 	public ResponseEntity<ApiResponseMessage> removeItemFromCart(@PathVariable("userId") String userId) {
 		cartService.clearCart(userId);
@@ -54,6 +58,7 @@ public class CartController {
 	}
 
 	// get cart by user
+	@PreAuthorize("hasAnyRole('NORMAL','ADMIN')")
 	@GetMapping("/{userId}")
 	public ResponseEntity<CartDto> addItemToCart(@PathVariable("userId") String userId) {
 		CartDto dto = cartService.getCartByUser(userId);

@@ -1,8 +1,9 @@
 package com.electronic.store.dtos;
 
+import java.util.List;
+
 import com.electronic.store.validate.ImageNameValid;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -40,4 +41,6 @@ public class UserDto {
 
 	@ImageNameValid
 	private String imageName;
+	
+	private List<RoleDto> roles;
 }
