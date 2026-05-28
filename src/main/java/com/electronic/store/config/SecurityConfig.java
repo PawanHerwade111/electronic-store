@@ -1,5 +1,8 @@
 package com.electronic.store.config;
 
+import java.util.List;
+
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +24,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.electronic.store.security.JwtAuthenticationEntryPoint;
 import com.electronic.store.security.JwtAuthenticationFilter;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @EnableWebSecurity(debug = true)
 @Configuration
@@ -54,7 +61,30 @@ public class SecurityConfig {
 //		//http javascript based login
 //		httpSecurity.httpBasic(Customizer.withDefaults());
 //		return httpSecurity.build();
-		httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable());
+		//httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable());
+		
+		//cors config
+		httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
+				.configurationSource(new CorsConfigurationSource() {
+
+					@Override
+					public @Nullable CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+						CorsConfiguration corsConfiguration = new CorsConfiguration();
+						// origins
+						// methods
+						// corsConfiguration.addAllowedOrigin("http://localhost:4200");//single
+						// corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200",
+						// "http://localhost:4300"));//multiple
+						corsConfiguration.setAllowedOriginPatterns(List.of("*"));// allow all
+						corsConfiguration.setAllowedMethods(List.of("*"));
+						corsConfiguration.setAllowCredentials(true);
+						corsConfiguration.setAllowedHeaders(List.of("*"));
+						corsConfiguration.setMaxAge(5000L);
+						return corsConfiguration;
+					}
+				})
+
+		);
 		httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 		httpSecurity.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/users/**").hasAnyRole("ADMIN","NORMAL")
