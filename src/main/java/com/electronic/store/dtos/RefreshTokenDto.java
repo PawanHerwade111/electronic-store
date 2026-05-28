@@ -1,5 +1,7 @@
 package com.electronic.store.dtos;
 
+import java.time.Instant;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,13 +10,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JwtResponse {
+@AllArgsConstructor
+public class RefreshTokenDto {
 
+	private int id;
 	private String token;
-	UserDto userDto;
-	//private String refreshToken;
-	private RefreshTokenDto refreshTokenDto;
+	private Instant expiryDate;
+	//private UserDto user;
+
 }

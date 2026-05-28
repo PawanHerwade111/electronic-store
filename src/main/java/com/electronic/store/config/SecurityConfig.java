@@ -94,7 +94,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST,"/users/**").permitAll()
 				.requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
 				.requestMatchers("/categories/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/authentication/generate-token").permitAll()
+				.requestMatchers(HttpMethod.POST, "/authentication/generate-token","/authentication/regenerate-token").permitAll()
 				.requestMatchers("/authentication/**").authenticated()
 				.anyRequest().permitAll()
 				
