@@ -46,9 +46,19 @@ public class SecurityConfig {
 	@Autowired
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
+	private final String[] PUBLIC_URLS = {
+			"/swagger-ui/**",
+			"/webjars/**",
+			"/swagger-resources/**",
+			"/v3/api-docs/**"
+
+	};
+	
 	//configure security
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
+		
+
 		//configurations
 //		httpSecurity.authorizeHttpRequests(request ->{
 //			// /users-->public
@@ -96,6 +106,7 @@ public class SecurityConfig {
 				.requestMatchers("/categories/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/authentication/generate-token","/authentication/regenerate-token").permitAll()
 				.requestMatchers("/authentication/**").authenticated()
+				.requestMatchers(PUBLIC_URLS).permitAll()
 				.anyRequest().permitAll()
 				
 				

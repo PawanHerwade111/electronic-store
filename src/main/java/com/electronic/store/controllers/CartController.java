@@ -17,8 +17,11 @@ import com.electronic.store.dtos.ApiResponseMessage;
 import com.electronic.store.dtos.CartDto;
 import com.electronic.store.services.CartService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/carts")
+@Tag(name ="Cart Controller", description="Rest API's used to perform cart Operations.")
 public class CartController {
 
 	@Autowired

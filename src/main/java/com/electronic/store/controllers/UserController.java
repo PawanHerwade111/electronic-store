@@ -30,11 +30,14 @@ import com.electronic.store.dtos.UserDto;
 import com.electronic.store.services.FileService;
 import com.electronic.store.services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name ="User Controller", description="Rest API's used to perform user Operations.")
 public class UserController {
 
 	@Autowired
@@ -75,6 +78,7 @@ public class UserController {
 
 	// get all users
 	@GetMapping
+	@Operation(summary="get all users", description="this method is used to get all users from Database.")
 	public ResponseEntity<PageableResponse<UserDto>> getAllUsers(
 			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,

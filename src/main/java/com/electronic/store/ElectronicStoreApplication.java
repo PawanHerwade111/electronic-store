@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.electronic.store.entities.Role;
 import com.electronic.store.entities.User;
@@ -15,6 +16,7 @@ import com.electronic.store.repositories.RoleRepository;
 import com.electronic.store.repositories.UserRepository;
 
 @SpringBootApplication
+@EnableWebMvc
 public class ElectronicStoreApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
