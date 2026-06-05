@@ -31,7 +31,7 @@ public class SwaggerConfig {
 		info.setTitle("Electronic Store API's");
 		info.setDescription("This is backend project created by Pawan");
 		info.setVersion("1.0.0V");
-		info.setContact(new Contact().name("Pawan").email("pawan@gmail.com").url("www.demostore.com"));
+		info.setContact(new Contact().name("Pawan").email("pawanherwade111@gmail.com").url("https://github.com/PawanHerwade111"));
 		return info;
 	}
 }
