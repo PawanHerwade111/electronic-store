@@ -3,12 +3,14 @@ package com.electronic.store;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.electronic.store.entities.User;
 import com.electronic.store.repositories.UserRepository;
 import com.electronic.store.security.JwtHelper;
 
 @SpringBootTest
+@ActiveProfiles("local")
 class ElectronicStoreApplicationTests {
 	
 	@Autowired
@@ -19,6 +21,7 @@ class ElectronicStoreApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Testing our Project.");
 	}
 	
 	
