@@ -107,6 +107,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/authentication/generate-token","/authentication/regenerate-token").permitAll()
 				.requestMatchers("/authentication/**").authenticated()
 				.requestMatchers(PUBLIC_URLS).permitAll()
+				.requestMatchers(HttpMethod.GET).permitAll()
 				.anyRequest().permitAll()
 				
 				
