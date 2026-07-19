@@ -145,5 +145,65 @@ public class UserServiceTest {
 		Assertions.assertEquals(3, allUser.getContent().size());
 	}
 	
+	@Test
+	public void getUserByIdTest() {
+		String userId = "userIdTest";
+		Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+		//actual call of service method
+		UserDto userDto = userService.getUserById(userId);
+		
+		Assertions.assertNotNull(userDto);
+		Assertions.assertEquals(user.getName(), userDto.getName(),"Name not matched!!");
+	}
+	
+	@Test
+	public void getUserByEmailTest() {
+		String emailId = "pawan@gmail.com";
+		Mockito.when(userRepository.findByEmail(emailId)).thenReturn(Optional.of(user));
+		
+		UserDto userDto = userService.getUserByEmail(emailId);
+		Assertions.assertNotNull(userDto);
+		Assertions.assertEquals(user.getEmail(), userDto.getEmail(),"Email not matched!!");
+	}
+	
+	@Test
+	public void searchUserTest() {
+		User user1 = User.builder()
+				.name("Pawan")
+				.email("pawan@gmail.com")
+				.about("I am developer.")
+				.gender("Male")
+				.imageName("pawan.png")
+				.password("pawan")
+				.roles(List.of(role))
+				.build();
+		
+		User user2 = User.builder()
+				.name("Allu")
+				.email("pawan@gmail.com")
+				.about("I am developer.")
+				.gender("Male")
+				.imageName("pawan.png")
+				.password("pawan")
+				.roles(List.of(role))
+				.build();
+		
+		User user3 = User.builder()
+				.name("Ram")
+				.email("pawan@gmail.com")
+				.about("I am developer.")
+				.gender("Male")
+				.imageName("pawan.png")
+				.password("pawan")
+				.roles(List.of(role))
+				.build();
+		
+		String keywords = "Allu";
+		Mockito.when(userRepository.findByNameContaining(keywords)).thenReturn(Arrays.asList(user, user1, user2, user3));
+		
+		List<UserDto> userDtos = userService.searchUser(keywords);
+		Assertions.assertEquals(4, userDtos.size(), "Size not matched!!");
+	}
+	
 
 }
